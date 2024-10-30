@@ -6,6 +6,7 @@ import com.davs.mockito.ejemplos.models.Examen;
 
 public interface ExamenRepository {
 
+    Examen guardar(Examen examen);
     List<Examen> findAll();
 
 }
