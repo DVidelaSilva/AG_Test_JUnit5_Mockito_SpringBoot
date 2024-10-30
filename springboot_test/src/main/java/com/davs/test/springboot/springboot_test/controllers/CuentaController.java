@@ -4,33 +4,52 @@ import static org.springframework.http.HttpStatus.*;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.davs.test.springboot.springboot_test.models.Cuenta;
 import com.davs.test.springboot.springboot_test.models.TransaccionDto;
 import com.davs.test.springboot.springboot_test.services.CuentaService;
 
-@Controller
+
+
+@RestController
 @RequestMapping("/api/cuentas")
 public class CuentaController {
 
     @Autowired
     private CuentaService cuentaService;
 
+
+    @GetMapping
+    @ResponseStatus(OK)
+    public List<Cuenta> listar() {
+        return cuentaService.findAll();
+    }
+
+
+
     @GetMapping("/{id}")
     @ResponseStatus(OK)
     public Cuenta detalle(@PathVariable Long id){
         return cuentaService.findById(id);
+    }
+
+
+    @PostMapping
+    @ResponseStatus(CREATED)
+    public Cuenta guardar(@RequestBody Cuenta cuenta) {
+        return cuentaService.save(cuenta);
     }
 
 
@@ -47,6 +66,9 @@ public class CuentaController {
         return ResponseEntity.ok(response);
 
     }
+
+
+
         
 
 }
